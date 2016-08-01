@@ -1,0 +1,23 @@
+name: openstack-compute
+version: 0
+summary: OpenStack Compute Snap
+description: Snap for use on OpenStack Compute hypervisor machines
+confinement: devmode
+
+apps:
+  nova-compute:
+    command: usr/bin/nova-compute
+    daemon: simple
+    plugs:
+      - network
+      - system-observe
+      - mount-observe
+      - network-observe
+
+parts:
+  nova:
+    plugin: python2
+    source: https://github.com/openstack/nova
+    source-type: git
+    source-branch: stable/mitaka
+    build-packages: [python-dev, libssl-dev, libxml2-dev, libxslt1-dev, pkg-config, libffi-dev, libpq-dev, libmysqlclient-dev, graphviz, libsqlite3-dev]
