@@ -16,7 +16,7 @@ description: |
   (SQLite, MySQL, and PostgreSQL, for instance), different types of user
   databases (LDAP or SQL), etc.
   .
-  This snap provides the requirement Nova components for a Compute Hypervisor.
+  This snap provides the required Nova components for a Compute Hypervisor.
 confinement: devmode
 
 apps:
@@ -35,15 +35,13 @@ parts:
     plugin: python3
     source: http://tarballs.openstack.org/nova/nova-stable-mitaka.tar.gz
     constraints: https://raw.githubusercontent.com/openstack/requirements/stable/mitaka/upper-constraints.txt
-    stage-packages: [ebtables, iptables, genisoimage, parted, vlan, qemu-utils, kpartx, python-libvirt]
+    stage-packages: [ebtables, iptables, genisoimage, parted, vlan, qemu-utils, kpartx, python3-libvirt]
     build-packages: [python3-dev, libssl-dev, libxml2-dev, libxslt1-dev, pkg-config,
                      libffi-dev, libpq-dev, libmysqlclient-dev, graphviz, libsqlite3-dev]
   config:
     plugin: copy
     files:
-      ../../../parts/nova/src/etc/nova/api-paste.ini: etc/nova/
       ../../../parts/nova/src/etc/nova/rootwrap.conf: etc/nova/
-      ../../../parts/nova/src/etc/nova/policy.json: etc/nova/
       ../../../parts/nova/src/etc/nova/rootwrap.d/*: etc/nova/rootwrap.d/
       etc/nova.conf: etc/nova/nova.conf
       templates/*: templates/
