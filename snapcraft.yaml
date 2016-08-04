@@ -33,10 +33,10 @@ apps:
 
 parts:
   nova:
-    plugin: python3
+    plugin: python2
     source: http://tarballs.openstack.org/nova/nova-stable-mitaka.tar.gz
     constraints: https://raw.githubusercontent.com/openstack/requirements/stable/mitaka/upper-constraints.txt
-    stage-packages: [ebtables, iptables, genisoimage, parted, vlan, qemu-utils, kpartx, python3-libvirt]
+    stage-packages: [ebtables, iptables, genisoimage, parted, vlan, qemu-utils, kpartx, python-libvirt]
     build-packages: [python3-dev, libssl-dev, libxml2-dev, libxslt1-dev, pkg-config,
                      libffi-dev, libpq-dev, libmysqlclient-dev, graphviz, libsqlite3-dev]
   config:

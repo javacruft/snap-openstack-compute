@@ -7,4 +7,4 @@ if [ $(id -u) -eq 0 ]; then
         $SNAP/templates/nova-snap.conf > $SNAP_COMMON/nova.conf.d/nova-snap.conf
 fi
 
-exec "$SNAP/usr/bin/python3" "$SNAP/usr/bin/$1" --config-file=$SNAP/etc/nova/nova.conf --config-dir=$SNAP_COMMON/nova.conf.d "${@:2}"
+exec "$SNAP/usr/bin/python" "$SNAP/usr/bin/$1" --config-file=$SNAP/etc/nova/nova.conf --config-dir=$SNAP_COMMON/nova.conf.d "${@:2}"
