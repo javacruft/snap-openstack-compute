@@ -1,23 +1,50 @@
 name: openstack-compute
 version: 0
-summary: OpenStack Compute Snap
-description: Snap for use on OpenStack Compute hypervisor machines
+summary: OpenStack Compute Hypervisor
+description: |
+  OpenStack is a reliable cloud infrastructure. Its mission is to produce
+  the ubiquitous cloud computing platform that will meet the needs of public
+  and private cloud providers regardless of size, by being simple to implement
+  and massively scalable.
+  .
+  OpenStack Compute, codenamed Nova, is a cloud computing fabric controller. In
+  addition to its "native" API (the OpenStack API), it also supports the Amazon
+  EC2 API.
+  .
+  Nova is intended to be modular and easy to extend and adapt. It supports many
+  different hypervisors (KVM and Xen to name a few), different database backends
+  (SQLite, MySQL, and PostgreSQL, for instance), different types of user
+  databases (LDAP or SQL), etc.
+  .
+  This snap provides the requirement Nova components for a Compute Hypervisor.
 confinement: devmode
 
 apps:
   nova-compute:
-    command: usr/bin/nova-compute
+    command: bin/run.sh nova-compute
     daemon: simple
     plugs:
       - network
       - system-observe
       - mount-observe
       - network-observe
+      - network-control
 
 parts:
   nova:
-    plugin: python2
-    source: https://github.com/openstack/nova
-    source-type: git
-    source-branch: stable/mitaka
-    build-packages: [python-dev, libssl-dev, libxml2-dev, libxslt1-dev, pkg-config, libffi-dev, libpq-dev, libmysqlclient-dev, graphviz, libsqlite3-dev]
+    plugin: python3
+    source: http://tarballs.openstack.org/nova/nova-stable-mitaka.tar.gz
+    constraints: https://raw.githubusercontent.com/openstack/requirements/stable/mitaka/upper-constraints.txt
+    stage-packages: [ebtables, iptables, genisoimage, parted, vlan, qemu-utils, kpartx, python-libvirt]
+    build-packages: [python3-dev, libssl-dev, libxml2-dev, libxslt1-dev, pkg-config,
+                     libffi-dev, libpq-dev, libmysqlclient-dev, graphviz, libsqlite3-dev]
+  config:
+    plugin: copy
+    files:
+      ../../../parts/nova/src/etc/nova/api-paste.ini: etc/nova/
+      ../../../parts/nova/src/etc/nova/rootwrap.conf: etc/nova/
+      ../../../parts/nova/src/etc/nova/policy.json: etc/nova/
+      ../../../parts/nova/src/etc/nova/rootwrap.d/*: etc/nova/rootwrap.d/
+      etc/nova.conf: etc/nova/nova.conf
+      templates/*: templates/
+      bin/run.sh: bin/run.sh
