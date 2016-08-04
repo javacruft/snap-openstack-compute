@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $(id -u) -eq 0 ]; then
-    mkdir -p $SNAP_COMMON/nova.conf.d
+    mkdir -p $SNAP_COMMON/nova.conf.d $SNAP_COMMON/instances
     sed -e "s|__SNAP_DATA__|$SNAP_COMMON|g" \
         -e "s|__SNAP__|$SNAP|g" \
         $SNAP/templates/nova-snap.conf > $SNAP_COMMON/nova.conf.d/nova-snap.conf
