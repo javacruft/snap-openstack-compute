@@ -29,6 +29,7 @@ apps:
       - mount-observe
       - network-observe
       - network-control
+      - firewall-control
 
 parts:
   nova:
